@@ -1,0 +1,20 @@
+* {
+    /*border: dotted 1px black;*/
+}
+
+html {
+    background: dodgerblue;
+    color: white;
+    font-family: sans-serif;
+    font-size: 1.5em;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+}
+table, tr, td {
+    border: solid 1px white;
+    border-collapse: collapse;
+    padding: 20px;
+}
