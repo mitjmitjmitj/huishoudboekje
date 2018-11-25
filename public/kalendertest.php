@@ -9,6 +9,7 @@
     <title>Document</title>
 </head>
 <body>
+
 <table>
     <?php
 
@@ -16,18 +17,26 @@
     require_once ('getdates.php');
     define('SECONDS_INNA_DAY', 3600 * 24);
     define('TODAY', time() - time() % SECONDS_INNA_DAY);
-    $saldo = 1000.00;
 
-    // Gathering of formdata
+    // Asking for current balance
     if ($_POST['submit']) {
-        $bedrag = $_POST['bedrag'];
-        $periode = $_POST['periode'];
-        $startdatum = strtotime($_POST['startdatum']);
-        $einddatum = strtotime($_POST['einddatum']);
+        $saldo = $_POST['saldo'];
     } else {
-        echo 'NO POST.';
+        ?>
+        <form action="kalendertest.php" method="post">
+            <label>Huidige saldo:
+                <input type="text" name="saldo">
+            </label>
+            <input type="submit" name="submit">
+        </form>
+    <?php
         exit();
     }
+
+    $bedrag = 50;
+    $periode = 2;
+    $startdatum = TODAY;
+    $einddatum = TODAY + SECONDS_INNA_DAY * 365;
 
     // Gathering of transaction dates
     $dates = array();
