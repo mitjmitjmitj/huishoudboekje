@@ -17,26 +17,30 @@
     require_once ('getdates.php');
     define('SECONDS_INNA_DAY', 3600 * 24);
     define('TODAY', time() - time() % SECONDS_INNA_DAY);
+    define('NUMBER_OF_DAYS_AHEAD', 30);
 
     // Asking for current balance
-    if ($_POST['submit']) {
-        $saldo = $_POST['saldo'];
-    } else {
+    if (!$_POST['submit']) {
         ?>
         <form action="kalendertest.php" method="post">
-            <label>Huidige saldo:
-                <input type="text" name="saldo">
-            </label>
+            <label>Huidige saldo:<input type="text" name="saldo"></label>
             <input type="submit" name="submit">
         </form>
     <?php
         exit();
     }
 
-    $bedrag = 50;
-    $periode = 2;
-    $startdatum = TODAY;
-    $einddatum = TODAY + SECONDS_INNA_DAY * 365;
+    $saldo = $_POST['saldo'];
+
+    $dbc = mysqli_connect('localhost','root','root','huishoudboekje') or die ('Error connecting.');
+    $query = "SELECT * FROM transactions";
+    $result = mysqli_query($dbc, $query) or die ('Error querying.');
+    while ($row = mysqli_fetch_array($result)) {
+        $bedrag = $row['amount'];
+        $periode = $row['period'];
+        $startdatum = strtotime($row['startdate']);
+        $einddatum = strtotime($row['enddate']);
+    }
 
     // Gathering of transaction dates
     $dates = array();
@@ -48,7 +52,7 @@
     }
 
     // Printing the table with transactions
-    for ($i = 0 ; $i < 1200 ; $i++) {
+    for ($i = 0 ; $i < NUMBER_OF_DAYS_AHEAD ; $i++) {
         $datum = TODAY + $i * SECONDS_INNA_DAY;
         $datumformat = date('D d-m',$datum);
         if (in_array($datum, $dates)) {
