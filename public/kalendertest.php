@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>HUISHOUDBOEKJE</title>
 </head>
 <body>
 
@@ -61,13 +61,15 @@
             echo "<td>...</td>";
             echo "<td>...</td>";
             $saldo = $saldo - $bedrag;
-            echo "<td>&euro; $saldo</td></tr>";
+            $formatted = number_format($saldo,2,',','.');
+            echo "<td>&euro; $formatted</td></tr>";
         } else {
             echo "<tr><td>$datumformat</td>";
             echo "<td>...</td>";
             echo "<td>...</td>";
             echo "<td>...</td>";
-            echo "<td>&euro; $saldo</td></tr>";
+            $formatted = number_format($saldo,2,',','.');
+            echo "<td>&euro; $formatted</td></tr>";
         }
     }
 
